@@ -212,19 +212,6 @@
       });
     });
 
-    // About: texto desde izquierda, logo desde derecha
-    var aboutLayout = $(".about-layout");
-    if (aboutLayout) {
-      gsap.from(".about-text", {
-        scrollTrigger: { trigger: aboutLayout, start: "top 78%", once: true },
-        opacity: 0, x: -48, duration: 0.9, ease: "power3.out"
-      });
-      gsap.from(".about-visual", {
-        scrollTrigger: { trigger: aboutLayout, start: "top 78%", once: true },
-        opacity: 0, x: 48, duration: 0.9, ease: "power3.out"
-      });
-    }
-
     // Paralaje suave en la imagen hero
     var heroBg = $(".hero-bg-img");
     if (heroBg) {

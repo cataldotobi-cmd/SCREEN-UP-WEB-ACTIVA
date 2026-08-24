@@ -1130,11 +1130,6 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
   opacity: 1;
   transform: translateY(0);
 }
-/* About layout: no translateY — GSAP maneja el slide horizontal */
-.about-text.reveal,
-.about-visual.reveal {
-  transform: none;
-}
 .reveal[data-split] {
   opacity: 1;
   transform: none;
