@@ -360,10 +360,12 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 /* --- GALERÍA --- */
 .section-galeria {
   background: var(--blue-mist);
-  padding-bottom: 56px;
+  padding-bottom: 0;
 }
 .section-about {
-  padding-top: 56px;
+  background: var(--white);
+  padding-top: 64px;
+  padding-bottom: 64px;
 }
 .galeria-grid {
   display: grid;
@@ -425,7 +427,7 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
 
 /* --- SECTIONS GENERAL --- */
 .section {
-  padding: 80px 0;
+  padding: 72px 0;
   position: relative;
 }
 .section-header {
