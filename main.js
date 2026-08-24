@@ -137,7 +137,7 @@
     }).join("");
   }
 
-  // --- REVEALS (IntersectionObserver) ---
+  // --- REVEALS (IntersectionObserver con stagger en grids) ---
   function initReveals() {
     var els = $$(".reveal");
     if (!els.length) return;
@@ -147,9 +147,27 @@
       return;
     }
 
+    var staggered = new Set();
+
+    // Grids: observa el contenedor y anima hijos en cascada
+    var gridSelectors = ".ventajas-grid, [data-trust], [data-sectores], [data-planes], .resenas-track";
+    var gridObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        $$(".reveal", entry.target).forEach(function (child, i) {
+          staggered.add(child);
+          setTimeout(function () { child.classList.add("visible"); }, i * 110);
+        });
+        gridObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.08 });
+
+    $$(gridSelectors).forEach(function (c) { gridObserver.observe(c); });
+
+    // Resto de elementos: fade individual
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !staggered.has(entry.target)) {
           entry.target.classList.add("visible");
           observer.unobserve(entry.target);
         }
@@ -159,9 +177,7 @@
     els.forEach(function (el) { observer.observe(el); });
 
     setTimeout(function () {
-      $$(".reveal:not(.visible)").forEach(function (el) {
-        el.classList.add("visible");
-      });
+      $$(".reveal:not(.visible)").forEach(function (el) { el.classList.add("visible"); });
     }, 6000);
   }
 
@@ -182,19 +198,50 @@
     if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
 
+    // Títulos y kickers
     $$(".section-title").forEach(function (el) {
       gsap.from(el, {
-        scrollTrigger: { trigger: el, start: "top 85%", once: true },
-        opacity: 0, y: 30, duration: 0.7
+        scrollTrigger: { trigger: el, start: "top 88%", once: true },
+        opacity: 0, y: 28, duration: 0.7, ease: "power3.out"
+      });
+    });
+    $$(".section-kicker").forEach(function (el) {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: "top 88%", once: true },
+        opacity: 0, y: 14, duration: 0.5, ease: "power3.out"
       });
     });
 
-    $$(".section-kicker").forEach(function (el) {
-      gsap.from(el, {
-        scrollTrigger: { trigger: el, start: "top 85%", once: true },
-        opacity: 0, y: 15, duration: 0.5
+    // About: texto desde izquierda, logo desde derecha
+    var aboutLayout = $(".about-layout");
+    if (aboutLayout) {
+      gsap.from(".about-text", {
+        scrollTrigger: { trigger: aboutLayout, start: "top 78%", once: true },
+        opacity: 0, x: -48, duration: 0.9, ease: "power3.out"
       });
-    });
+      gsap.from(".about-visual", {
+        scrollTrigger: { trigger: aboutLayout, start: "top 78%", once: true },
+        opacity: 0, x: 48, duration: 0.9, ease: "power3.out"
+      });
+    }
+
+    // Paralaje suave en la imagen hero
+    var heroBg = $(".hero-bg-img");
+    if (heroBg) {
+      gsap.to(heroBg, {
+        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
+        yPercent: 20, ease: "none"
+      });
+    }
+
+    // Sección software: slide desde abajo
+    var softwareGrid = $(".software-grid");
+    if (softwareGrid) {
+      gsap.from($$(".software-item"), {
+        scrollTrigger: { trigger: softwareGrid, start: "top 80%", once: true },
+        opacity: 0, y: 36, duration: 0.6, stagger: 0.12, ease: "power3.out"
+      });
+    }
   }
 
 
