@@ -22,6 +22,7 @@
     var hide = function () {
       if (splash.classList.contains("hide")) return;
       splash.classList.add("hide");
+      document.body.style.overflow = "";
       setTimeout(function () { splash.style.display = "none"; }, 700);
     };
     var video = document.getElementById("splashVideo");
