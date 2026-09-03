@@ -26,13 +26,7 @@
       document.body.style.background = "";
       setTimeout(function () { splash.style.display = "none"; }, 700);
     };
-    var video = document.getElementById("splashVideo");
-    if (video) {
-      video.addEventListener("ended", hide);
-      setTimeout(hide, 8000); // seguridad por si el video falla
-    } else {
-      setTimeout(hide, 1800);
-    }
+    setTimeout(hide, 1800);
   }
 
   // --- NAV ---

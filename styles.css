@@ -66,8 +66,8 @@ button { border: none; background: none; cursor: pointer; font: inherit; }
   background: var(--blue);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
-  /* Fallback CSS: se cierra solo a los 8s aunque JS falle */
-  animation: splashFadeOut 0.7s var(--ease-out) 8s both;
+  /* Fallback CSS: se cierra solo a los 2.5s aunque JS falle */
+  animation: splashFadeOut 0.6s var(--ease-out) 2.5s both;
 }
 @keyframes splashFadeOut {
   to { opacity: 0; visibility: hidden; pointer-events: none; }
